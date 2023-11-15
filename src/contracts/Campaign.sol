@@ -7,6 +7,8 @@ contract Campaign {
         uint value;
         address recipient;
         bool complete;
+        int approvalCount;
+        mapping(address => bool) approvals;
     }
 
     Request[] public requests;
@@ -32,13 +34,22 @@ contract Campaign {
 
     function createRequest(string memory description, uint value, address recipient)
         public restricted {
-            Request memory newRequest = Request({
-                description: description,
-                value: value,
-                recipient: recipient,
-                complete: false
-            });
+            Request storage newRequest = requests.push();
 
-            requests.push(newRequest);
+            newRequest.description = description;
+            newRequest.value = value;
+            newRequest.recipient = recipient;
+            newRequest.complete = false;
+            newRequest.approvalCount = 0;         
+    }
+
+    function approveRequest(uint index) public {
+        Request storage request = requests[index];
+
+        require(approvers[msg.sender]);
+        require(!request.approvals[msg.sender]);
+
+        request.approvals[msg.sender] = true;
+        request.approvalCount++;
     }
 }
