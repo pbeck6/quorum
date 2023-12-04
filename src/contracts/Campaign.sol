@@ -22,8 +22,8 @@ contract Campaign {
         _;
     }
 
-    constructor(uint minimum) {
-        manager = msg.sender;
+    constructor(uint minimum, address creator) {
+        manager = creator;
         minimumContribution = minimum;
     }
 
