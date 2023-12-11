@@ -34,9 +34,9 @@ const output = JSON.parse(solc.compile(JSON.stringify(input), { import: findImpo
 
 fs.ensureDirSync(buildPath);
 
-for (let contract in output) {
+for (let file in output) {
     fs.outputJSONSync(
-        path.resolve(buildPath, contract + '.json'),
-        output[contract]
+        path.resolve(buildPath, file + '.json'),
+        output[file]
     );
 }
