@@ -5,12 +5,9 @@ const ganache = require('ganache');
 const web3 = new Web3(ganache.provider());
 
 const compiledFactory = require('../src/ethereum/build/CampaignFactory.json');
-const compiledCampaign = require('../src/ethereum/build/Campaign.json');
 
 let accounts;
 let factoryContract;
-let campaignAddress;
-let campaign;
 
 beforeEach(async () => {
     accounts = await web3.eth.getAccounts();
@@ -22,6 +19,11 @@ beforeEach(async () => {
 
 describe('CampaignFactory', () => {
     it('deploys a contract for CampaignFactory', () => {
-        assert.ok(factoryContract.options.address)
+        assert.ok(factoryContract.options.address);
+    });
+
+    it('gets a list of existing campaigns, if any', async () => {
+        const campaigns = await factoryContract.methods.getDeployedCampaigns().call();
+        assert.equal(campaigns.length, 0);
     });
 });
