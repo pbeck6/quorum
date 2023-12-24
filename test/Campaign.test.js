@@ -38,4 +38,54 @@ describe('Campaign', () => {
     it('gets an existing campaign', () => {
         assert.ok(campaign.options.address);
     });
+
+    it('marks caller of createCampaign as campaign manager', async () => {
+        const manager = await campaign.methods.manager().call();
+
+        assert.equal(accounts[0], manager);
+    });
+
+    it('accepts contributors and makes them approvers', async () => {
+        await campaign.methods.contribute().send({
+            from: accounts[1],
+            value: '101'
+        });
+        const isContributor = await campaign.methods.approvers(accounts[1]).call();
+        const isNotContributor = await campaign.methods.approvers(accounts[2]).call();
+
+        assert.equal(true, isContributor);
+        assert.equal(false, isNotContributor);
+    });
+
+    it('checks for a minimum contribution amount before adding to approvers', async () => {
+        try {
+            await campaign.methods.contribute().send({
+                from: accounts[1],
+                value: '99'
+            });
+            assert(false);
+        } catch (error) {
+            const isContributor = await campaign.methods.approvers(accounts[1]).call();
+
+            assert.equal(false, isContributor);
+        };
+    });
+
+    it('allows a manager to create a spend request', async () => {
+        await campaign.methods
+            .createRequest(
+                description = 'New spending request for test',
+                value = '102',
+                recipient = accounts[1]
+            ).send({
+                from: accounts[0],
+                gas: '10000000'
+            });
+
+        const newRequest = await campaign.methods.requests(0).call();
+
+        assert.equal('New spending request for test', newRequest.description);
+        assert.equal(accounts[1], newRequest.recipient);
+    });
+
 });
