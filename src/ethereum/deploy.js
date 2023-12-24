@@ -4,7 +4,7 @@ const compiledFactory = require('./build/CampaignFactory.json');
 
 const provider = new HDWalletProvider(
   'REPLACE_WITH_MNEMONIC',
-  'https://rinkeby.infura.io/v3/some_endpoint'
+  'https://sepolia.infura.io/v3/some_endpoint'
 );
 const web3 = new Web3(provider);
 
