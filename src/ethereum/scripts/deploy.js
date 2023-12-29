@@ -1,6 +1,6 @@
 const HDWalletProvider = require('@truffle/hdwallet-provider');
 const { Web3 } = require('web3');
-const compiledFactory = require('./build/CampaignFactory.json');
+const compiledFactory = require('../build/CampaignFactory.json');
 
 const provider = new HDWalletProvider(
   'REPLACE_WITH_MNEMONIC',
@@ -20,4 +20,5 @@ const deploy = async () => {
   console.log('Contract deployed to', result.options.address);
   provider.engine.stop();
 };
+
 deploy();
