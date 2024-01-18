@@ -1,30 +1,41 @@
 import React, { Component } from 'react';
-import { FormField, Button, Form, Input } from 'semantic-ui-react'
+import { FormField, Button, Form, Input, Message } from 'semantic-ui-react'
 import Layout from '../../components/Layout'; 
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
 
 class CampaignNew extends Component {
     state = {
-        minimumContribution: ''
+        minimumContribution: '',
+        errorMessage: '',
+        loading: false
     };
 
     submitNewCampaign = async (event) => {
         event.preventDefault();
 
-        const accounts = await web3.eth.getAccounts();
-        await factory.methods
+        this.setState({ loading: true, errorMessage: '' });
+
+        try {
+            const accounts = await web3.eth.getAccounts();
+
+            await factory.methods
             .createCampaign(this.state.minimumContribution)
             .send({
                 from: accounts[0]
             });
+        } catch (error) {
+            this.setState({ errorMessage: error.message });
+        }
+
+        this.setState({ loading: false });
     }
 
     render() {
         return (
             <Layout>
                 <h3>Create a Campaign</h3>
-                <Form onSubmit={ this.submitNewCampaign }>
+                <Form onSubmit={ this.submitNewCampaign } error={ !!this.state.errorMessage }>
                     <FormField>
                         <label>Minimum contribution</label>
                         <Input 
@@ -35,7 +46,8 @@ class CampaignNew extends Component {
                                 this.setState({ minimumContribution: event.target.value })}
                         />
                     </FormField>
-                    <Button primary>Create</Button>
+                    <Message error header="Error" content={this.state.errorMessage} />
+                    <Button loading={ this.state.loading } primary>Create</Button>
                 </Form>
             </Layout>
         );
