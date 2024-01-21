@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FormField, Button, Form, Input, Message } from 'semantic-ui-react'
+import { withRouter } from 'next/router';
 import Layout from '../../components/Layout'; 
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
@@ -29,6 +30,8 @@ class CampaignNew extends Component {
         }
 
         this.setState({ loading: false });
+
+        this.props.router.push('/');
     }
 
     render() {
@@ -54,4 +57,4 @@ class CampaignNew extends Component {
     }
 }
 
-export default CampaignNew;
+export default withRouter(CampaignNew);
