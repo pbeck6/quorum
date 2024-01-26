@@ -8,7 +8,13 @@ class Campaign extends Component {
         const campaign = getCampaign(context.query.address);
         const campaignSummary = await campaign.methods.getSummary().call();
 
-        return { campaignSummary };
+        return { 
+            minimumContribution: campaignSummary[0],
+            balance: campaignSummary[1],
+            requestCount: campaignSummary[2],
+            approversCount: campaignSummary[3],
+            manager: campaignSummary[4]
+         };
     }
 
     render() {
