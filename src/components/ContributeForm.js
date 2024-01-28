@@ -25,12 +25,11 @@ class ContributeForm extends Component {
                 from: accounts[0],
                 value: web3.utils.toWei(this.state.contribution, 'ether')
             })
-
         } catch (error) {
             this.setState({ errorMessage: error.message });
         }
 
-        this.setState({ loading: false });
+        this.setState({ loading: false, contribution: '' });
 
         this.props.router.push(`/campaigns/${this.props.address}`);
     }
