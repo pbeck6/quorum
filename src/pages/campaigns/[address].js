@@ -3,6 +3,7 @@ import { withRouter } from 'next/router';
 import { Card } from 'semantic-ui-react';
 import web3 from '../../ethereum/web3';
 import Layout from '../../components/Layout';
+import ContributeForm from '../../components/ContributeForm';
 import getCampaign from '../../ethereum/campaign';
 
 class Campaign extends Component {
@@ -62,6 +63,7 @@ class Campaign extends Component {
             <Layout>
                 <h3>Show Campaign {`${this.props.router.query.address}`}</h3>
                 {this.renderCards()}
+                <ContributeForm />
             </Layout>
         )
     }

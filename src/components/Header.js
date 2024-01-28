@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, MenuItem } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import Link from 'next/link';
 
 const Header = () => {
