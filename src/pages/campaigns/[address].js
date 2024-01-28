@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'next/router';
-import { Card } from 'semantic-ui-react';
+import { Card, Grid, GridColumn } from 'semantic-ui-react';
 import web3 from '../../ethereum/web3';
 import Layout from '../../components/Layout';
 import ContributeForm from '../../components/ContributeForm';
@@ -11,7 +11,8 @@ class Campaign extends Component {
         const campaign = getCampaign(context.query.address);
         const campaignSummary = await campaign.methods.getSummary().call();
 
-        return { 
+        return {
+            address: context.query.address, 
             minimumContribution: campaignSummary[0].toString(),
             balance: campaignSummary[1].toString(),
             requestCount: campaignSummary[2].toString(),
@@ -62,8 +63,14 @@ class Campaign extends Component {
         return (
             <Layout>
                 <h3>Show Campaign {`${this.props.router.query.address}`}</h3>
-                {this.renderCards()}
-                <ContributeForm />
+                <Grid>
+                    <GridColumn width={10}>
+                        {this.renderCards()}
+                    </GridColumn>
+                    <GridColumn width={6}>
+                        <ContributeForm address={ this.props.address }/>
+                    </GridColumn>
+                </Grid>
             </Layout>
         )
     }
