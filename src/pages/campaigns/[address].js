@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { withRouter } from 'next/router';
-import { Card, Grid, GridColumn } from 'semantic-ui-react';
+import { Card, Grid, GridColumn, GridRow, Button } from 'semantic-ui-react';
+import Link from 'next/link';
 import web3 from '../../ethereum/web3';
 import Layout from '../../components/Layout';
 import ContributeForm from '../../components/ContributeForm';
@@ -18,7 +18,7 @@ class Campaign extends Component {
             requestCount: campaignSummary[2].toString(),
             approversCount: campaignSummary[3].toString(),
             manager: campaignSummary[4]
-         };
+        };
     }
 
     renderCards() {
@@ -62,18 +62,32 @@ class Campaign extends Component {
     render() {
         return (
             <Layout>
-                <h3>Show Campaign {`${this.props.router.query.address}`}</h3>
+                <h3>Show Campaign { this.props.address }</h3>
                 <Grid>
-                    <GridColumn width={10}>
-                        {this.renderCards()}
-                    </GridColumn>
-                    <GridColumn width={6}>
-                        <ContributeForm address={ this.props.address }/>
-                    </GridColumn>
+                    <GridRow>
+                        <GridColumn width={10}>
+                            {this.renderCards()}
+                        </GridColumn>
+                        <GridColumn width={6}>
+                            <ContributeForm address={ this.props.address }/>
+                        </GridColumn>
+                    </GridRow>
+                    <GridRow>
+                        <GridColumn>
+                            <Link href={`/campaigns/${this.props.address}/requests`}>
+                                <a>
+                                    <Button 
+                                        content="View Requests"
+                                        primary
+                                    />
+                                </a>
+                            </Link>
+                        </GridColumn>
+                    </GridRow>
                 </Grid>
             </Layout>
         )
     }
 }
 
-export default withRouter(Campaign);
+export default Campaign;
