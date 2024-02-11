@@ -29,7 +29,8 @@ class Requests extends Component {
         return { 
             address,
             requests,
-            approversCount
+            approversCount,
+            campaign
         };
     }
 
@@ -41,6 +42,7 @@ class Requests extends Component {
                 request={request}
                 address={this.props.address}
                 approversCount={this.props.approversCount}
+                campaign={this.props.campaign}
             />;
         });
     }
