@@ -4,7 +4,7 @@ import web3 from '../ethereum/web3';
 
 class RequestRow extends Component {
     render () {
-        const { id, request } = this.props;
+        const { id, request, approversCount } = this.props;
 
         return (
             <TableRow>
@@ -12,7 +12,7 @@ class RequestRow extends Component {
                 <TableCell>{request.description}</TableCell>
                 <TableCell>{web3.utils.fromWei(request.value, 'ether')}</TableCell>
                 <TableCell>{request.recipient}</TableCell>
-                <TableCell></TableCell>
+                <TableCell>{request.approvalCount} / {approversCount}</TableCell>
                 <TableCell></TableCell>
                 <TableCell></TableCell>
             </TableRow>

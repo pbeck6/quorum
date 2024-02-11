@@ -18,6 +18,7 @@ class Requests extends Component {
         const campaign = getCampaign(address);
 
         const requestCount = parseInt(await campaign.methods.getRequestsCount().call());
+        const approversCount = await campaign.methods.approversCount().call();
 
         const requests = await Promise.all(
             Array(requestCount).fill().map((element, index) => {
@@ -27,7 +28,8 @@ class Requests extends Component {
 
         return { 
             address,
-            requests
+            requests,
+            approversCount
         };
     }
 
@@ -38,6 +40,7 @@ class Requests extends Component {
                 id={index}
                 request={request}
                 address={this.props.address}
+                approversCount={this.props.approversCount}
             />;
         });
     }
