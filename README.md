@@ -12,6 +12,8 @@
 </details>
 
 ## About Quorum
+<img width="1459" alt="Screenshot" src="https://github.com/pbeck6/quorum/assets/67029914/78a4e8e6-b229-4c87-b12e-5a0fb9b3a5fe">
+
 
 Quorum is a decentralized app for launching and managing crowd-fund campaigns. Using smart contracts, Quorum puts more control into the hands of contributors on how their campaign funds are spent, compared to a traditional centralized approach.
 
